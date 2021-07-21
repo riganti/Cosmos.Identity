@@ -38,6 +38,16 @@ namespace Mobsites.Cosmos.Identity
                 throw new ArgumentNullException(nameof(user));
             }
 
+            if (string.IsNullOrEmpty(user.NormalizedUserName))
+            {
+                user.NormalizedUserName = user.UserName.ToUpperInvariant();
+            }
+
+            if (string.IsNullOrEmpty(user.NormalizedEmail))
+            {
+                user.NormalizedEmail = user.Email.ToUpperInvariant();
+            }
+
             return storageProvider.CreateAsync(user, cancellationToken);
         }
     }
